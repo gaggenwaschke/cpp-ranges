@@ -6,7 +6,7 @@
 
 #include "iterators/multitype_join.hpp"
 
-namespace views
+namespace ranges
 {
     template <typename... range_types>
         requires(std::ranges::range<std::remove_cvref_t<range_types>> && ...)

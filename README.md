@@ -16,7 +16,7 @@ The view can be used owning, non-owning and mixed:
 ```cpp
 #include <array>
 #include <vector>
-#include <views/multi_type_join.hpp>
+#include <ranges/multi_type_join.hpp>
 
 // owning
 std::array<int, 3> array{1, 2, 3};

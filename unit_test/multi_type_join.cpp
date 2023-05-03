@@ -2,18 +2,18 @@
 #include <algorithm>
 #include <array>
 #include <vector>
-#include <views/multi_type_join.hpp>
+#include <ranges/multi_type_join.hpp>
 
 namespace mock
 {
     constexpr static int expected[]{1, 2, 3, 4, 5};
 }
 
-TEST_CASE("view::multi_type_join non-owning")
+TEST_CASE("view::multi_type_join non-owning iterates")
 {
     std::array<int, 3> array{1, 2, 3};
     std::vector<int> vector{4, 5};
-    views::multi_type_join join_view{array, vector};
+    ranges::multi_type_join join_view{array, vector};
 
     CHECK(std::ranges::range<decltype(join_view)>);
     CHECK(std::ranges::equal(join_view, mock::expected));
@@ -29,9 +29,9 @@ TEST_CASE("view::multi_type_join non-owning")
     CHECK(vector[1] == 6);
 }
 
-TEST_CASE("view::multi_type_join owning")
+TEST_CASE("view::multi_type_join owning iterates")
 {
-    views::multi_type_join join_view{std::array<int, 3>{1, 2, 3}, std::vector<int>{4, 5}};
+    ranges::multi_type_join join_view{std::array<int, 3>{1, 2, 3}, std::vector<int>{4, 5}};
 
     CHECK(std::ranges::range<decltype(join_view)>);
     CHECK(std::ranges::equal(join_view, mock::expected));
@@ -44,21 +44,21 @@ TEST_CASE("view::multi_type_join owning")
     CHECK(std::ranges::equal(join_view, expected_incremented));
 }
 
-TEST_CASE("view::multi_type_join mixed ownership")
+TEST_CASE("view::multi_type_join mixed ownership iterates")
 {
     constexpr static std::array<int, 3> array{1, 2, 3};
-    views::multi_type_join join_view{array, std::vector<int>{4, 5}};
+    ranges::multi_type_join join_view{array, std::vector<int>{4, 5}};
 
     CHECK(std::ranges::range<decltype(join_view)>);
     CHECK(std::ranges::equal(join_view, mock::expected));
 }
 
-TEST_CASE("view::multi_type_join empty ranges")
+TEST_CASE("view::multi_type_join empty ranges iterates")
 {
     constexpr static std::array<int, 3> array{1, 2, 3};
     const std::vector<int> empty{};
     const std::vector<int> vector{4, 5};
-    views::multi_type_join join_view{array, empty, vector};
+    ranges::multi_type_join join_view{array, empty, vector};
 
     CHECK(std::ranges::range<decltype(join_view)>);
     CHECK(std::ranges::equal(join_view, mock::expected));
